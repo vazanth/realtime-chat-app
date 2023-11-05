@@ -7,7 +7,7 @@ class AppResponse {
   public data: any;
   public isOperational: boolean;
 
-  constructor(message: string, data: any = null, statusCode = null) {
+  constructor(message: any, data: any = null, statusCode: any = null) {
     this.message = message;
     this.statusCode = statusCode || this.getStatusCode(message);
     this.status = this.getStatus(this.statusCode);

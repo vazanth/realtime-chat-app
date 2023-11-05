@@ -62,3 +62,5 @@ export type MessageMap = {
   content: string;
   timestamp?: string;
 };
+
+export type ErrorMap = { field: string; message: string };
