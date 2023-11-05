@@ -65,6 +65,8 @@ You can browse the apis at <http://localhost:3000> using either in postman or cu
 
 # Validation
 
+This project uses the zod library for input and schema validation. Schemas are defined in the schemas folder and are used to validate incoming requests.
+
 # Endpoints
 
 |                       Endpoint | Description                                           | Payload                 |

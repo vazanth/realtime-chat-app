@@ -7,12 +7,13 @@ import {
 } from '../controllers/messageController';
 import { verifyToken } from '../controllers/authController';
 import upload from '../middleware/multer';
+import { validateFetchMessage } from '../middleware/validator';
 
 const router: Router = Router();
 
 router.use(verifyToken);
 
-router.get('/:chatId', fetchMessage);
+router.get('/:chatId', validateFetchMessage, fetchMessage);
 
 router.post('/', sendMessage);
 

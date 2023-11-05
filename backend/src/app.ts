@@ -1,5 +1,4 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import userRouter from './routes/userRoutes';
@@ -15,19 +14,8 @@ app.use(cors());
 // set security http headers
 app.use(helmet());
 
-// helmet.contentSecurityPolicy({
-//   directives: {
-//     defaultSrc: ["'self'"],
-//     scriptSrc: ["'self'", 'https://cdn.socket.io'],
-//     // Add other CSP directives as needed
-//   },
-// });
-
 // middleware for parsing request
 app.use(express.json());
-
-// front end static files
-app.use(express.static(path.join('__dirname', '..', 'public')));
 
 // api routes
 app.use('/api/users', userRouter);
