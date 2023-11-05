@@ -59,11 +59,24 @@ export const uploadFile = catchError(
       id: generateRandomId(21),
       sender: req.user?.username,
       content: {
-        filename: req.file?.fieldname,
-        downloadUrl: `downloadUrl/${req.file?.fieldname}`,
+        filename: req.file?.filename,
       },
       timestamp: new Date().toISOString(),
     });
     return next(new AppResponse(commonResponseMessages.UPLOAD_SUCCESS));
+  }
+);
+
+export const downloadFile = catchError(
+  (req: CustomRequest, res: Response, next: NextFunction) => {
+    const { file_id } = req.params;
+
+    const requestedFile = `${downloadUrl}/${file_id}`;
+
+    res.download(requestedFile, (err: Error) => {
+      if (err) {
+        return next(new AppResponse(commonResponseMessages.SERVER_ERROR));
+      }
+    });
   }
 );

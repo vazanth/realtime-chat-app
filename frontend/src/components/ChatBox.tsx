@@ -142,6 +142,38 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
     socket.on('stop typing', () => setIsTyping(false));
   }, [socket]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const downloadFile = async (content: any) => {
+    const filename = content.filename;
+    console.log('filename', filename);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/messages/download-file/${filename}`,
+        {
+          method: 'GET',
+          headers: {
+            authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+        }
+      );
+      // Handle response from the server if needed
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'image.png'; // Set the desired file name with appropriate file extension
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error('Failed to fetch image data');
+      }
+    } catch (error) {
+      console.error('Error uploading file', error);
+    }
+  };
+
   return (
     <div className='w-[100%] py-6 px-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
       {convo && convo.length
@@ -165,12 +197,12 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
                   </div>
                   {typeof msg.content === 'object' ? (
                     <i className='fas fa-solid fa-images bottom-6 mb-3'>
-                      <a
-                        href={msg.content.downloadUrl}
-                        download={msg.content.filename}
+                      <button
+                        type='button'
+                        onClick={() => downloadFile(msg.content)}
                       >
                         Download {msg.content.filename}
-                      </a>
+                      </button>
                     </i>
                   ) : (
                     msg.content
