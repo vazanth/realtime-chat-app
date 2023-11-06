@@ -2,19 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import AppResponse from '../helpers/AppResponse';
 import { extractValidationErrors } from '../helpers/parseSchemaError';
-import {
-  searchParamSchema,
-  signInSchema,
-  signUpSchema,
-} from '../schema/userSchema';
+import { searchQuerySchema, signInSchema, signUpSchema } from '../schema/userSchema';
 import { createChatSchema, createGroupSchema } from '../schema/chatSchema';
-import {
-  downloadFileSchema,
-  fetchMessageSchema,
-  sendMessageSchema,
-} from '../schema/messageSchema';
+import { downloadFileSchema, fetchMessageSchema, sendMessageSchema } from '../schema/messageSchema';
 
-function createValidationMiddleware(schema: z.ZodObject<any, any, any>) {
+function createValidationMiddleware(schema: z.ZodObject<any, any, any> | z.ZodString) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
@@ -30,13 +22,9 @@ function createValidationMiddleware(schema: z.ZodObject<any, any, any>) {
 
 export const validateSignUp = createValidationMiddleware(signUpSchema);
 export const validateSignIn = createValidationMiddleware(signInSchema);
-export const validateParam = createValidationMiddleware(searchParamSchema);
+export const validateQuery = createValidationMiddleware(searchQuerySchema);
 export const validateUserChat = createValidationMiddleware(createChatSchema);
-export const validateGroupCreation =
-  createValidationMiddleware(createGroupSchema);
-export const validateFetchMessage =
-  createValidationMiddleware(fetchMessageSchema);
-export const validateSendMessage =
-  createValidationMiddleware(sendMessageSchema);
-export const validateDownloadFile =
-  createValidationMiddleware(downloadFileSchema);
+export const validateGroupCreation = createValidationMiddleware(createGroupSchema);
+export const validateFetchMessage = createValidationMiddleware(fetchMessageSchema);
+export const validateSendMessage = createValidationMiddleware(sendMessageSchema);
+export const validateDownloadFile = createValidationMiddleware(downloadFileSchema);

@@ -7,6 +7,7 @@ A a real-time chat application built with Node.js, Express, and Socket.IO for th
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Screenshots](#screenshots)
 - [Usage](#usage)
 - [Validation](#validation)
 - [Endpoints](#endpoints)
@@ -58,6 +59,16 @@ npm install
 ```bash
 npm run dev
 ```
+
+# Screenshots
+
+![Alt text](backend/public/sign-up.png)
+
+![Alt text](backend/public/sign-in.png)
+
+![Alt text](backend/public/group-creation.png)
+
+![Alt text](backend/public/chat-split-view.png)
 
 # Usage
 
@@ -126,10 +137,4 @@ This project uses the zod library for input and schema validation. Schemas are d
     "sender": "d067eba1611b2d299d4c1",
     "content": "Hi"
   }
-```
-
-# upl-file
-
-```send file as form data
-
 ```
