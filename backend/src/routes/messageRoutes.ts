@@ -7,15 +7,15 @@ import {
 } from '../controllers/messageController';
 import { verifyToken } from '../controllers/authController';
 import upload from '../middleware/multer';
-import { validateFetchMessage } from '../middleware/validator';
+import { validateSendMessage } from '../middleware/validator';
 
 const router: Router = Router();
 
 router.use(verifyToken);
 
-router.get('/:chatId', validateFetchMessage, fetchMessage);
+router.get('/:chatId', fetchMessage);
 
-router.post('/', sendMessage);
+router.post('/', validateSendMessage, sendMessage);
 
 router.post('/send-file', upload.single('file'), uploadFile);
 
