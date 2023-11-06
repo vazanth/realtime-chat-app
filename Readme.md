@@ -62,7 +62,7 @@ npm run dev
 
 # Screenshots
 
-![Alt text](backend/public/sign-up.png)
+<img loading="lazy" src="./backend/public/sign-up.png" alt="sign up" />
 
 ![Alt text](backend/public/sign-in.png)
 
