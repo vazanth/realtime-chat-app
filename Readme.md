@@ -70,12 +70,6 @@ npm run dev
 
 <img loading="lazy" src="./backend/public/chat-split-view.png" alt="chat split view" />
 
-![Alt text](backend/public/sign-in.png)
-
-![Alt text](backend/public/group-creation.png)
-
-![Alt text](backend/public/chat-split-view.png)
-
 # Usage
 
 You can browse the apis at <http://localhost:3000> using either in postman or curl or any api platform and access the fron-end app at <http://localhost:5173>
