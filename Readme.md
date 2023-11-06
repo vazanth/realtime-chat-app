@@ -64,6 +64,12 @@ npm run dev
 
 <img loading="lazy" src="./backend/public/sign-up.png" alt="sign up" />
 
+<img loading="lazy" src="./backend/public/sign-in.png" alt="sign in" />
+
+<img loading="lazy" src="./backend/public/group-creation.png" alt="group creation" />
+
+<img loading="lazy" src="./backend/public/chat-split-view.png" alt="chat split view" />
+
 ![Alt text](backend/public/sign-in.png)
 
 ![Alt text](backend/public/group-creation.png)
