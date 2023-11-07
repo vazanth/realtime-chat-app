@@ -1,4 +1,4 @@
-# News Aggregator API
+# Real Time Chat App
 
 A a real-time chat application built with Node.js, Express, and Socket.IO for the backend. This application allows users to register, log in, engage in private chats with other registered users, create and participate in group chats, and share files seamlessly. The frontend is developed using React, which interfaces with the backend APIs and Socket.IO to provide users with an intuitive and interactive user interface.
 
