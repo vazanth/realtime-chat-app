@@ -40,7 +40,7 @@ const ChatList: FC<ChatListProps> = ({ refresh, sendChatId }) => {
   };
 
   const openSocketCom = (history: ChatMap) => {
-    socket.emit('joinPrivateChat', history.id);
+    socket.emit('joinChat', history.id);
     sendChatId(history.id);
   };
 

@@ -2,8 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { generateRandomId } from '../helpers/common';
 
 function chat(io: Server, socket: Socket): void {
-  socket.on('joinPrivateChat', (roomId) => {
-    console.log('roomId', roomId);
+  socket.on('joinChat', (roomId) => {
     socket.join(roomId);
   });
 
