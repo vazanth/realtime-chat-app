@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { MessageMap } from '../types';
 import { useSocket } from '../context/SocketContext';
 import dayjs from 'dayjs';
+import { decryptMessage, encryptMessage } from '../helpers';
 // import TypeAnimate from './TypeAnimate';
 
 type ChatBoxProps = {
@@ -68,7 +69,6 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
           },
         })
       ).json();
-      console.log('res', response);
       setConvo(response.data);
     } catch (error) {
       console.log('err', error);
@@ -84,6 +84,7 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
   };
 
   const sendTextMessage = async () => {
+    const encryptedMessage = encryptMessage(message);
     try {
       await (
         await fetch(`http://localhost:3000/api/messages`, {
@@ -95,13 +96,13 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
           body: JSON.stringify({
             id: selectedId,
             sender: sessionStorage.getItem('username'),
-            content: message,
+            content: encryptedMessage,
           }),
         })
       ).json();
       setMessage('');
       socket.emit('privateChatMessage', {
-        message,
+        message: encryptedMessage,
         username: sessionStorage.getItem('username'),
         room: selectedId,
       });
@@ -116,18 +117,13 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
       formData.append('file', fileData);
 
       try {
-        const response = await fetch(
-          'http://localhost:3000/api/messages/send-file',
-          {
-            method: 'POST',
-            headers: {
-              authorization: `Bearer ${sessionStorage.getItem('token')}`,
-            },
-            body: formData,
-          }
-        );
-        // Handle response from the server if needed
-        console.log('File uploaded successfully', response);
+        await fetch('http://localhost:3000/api/messages/send-file', {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          },
+          body: formData,
+        });
       } catch (error) {
         console.error('Error uploading file', error);
       }
@@ -145,7 +141,6 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const downloadFile = async (content: any) => {
     const filename = content.filename;
-    console.log('filename', filename);
     try {
       const response = await fetch(
         `http://localhost:3000/api/messages/download-file/${filename}`,
@@ -185,7 +180,9 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
                     <span>{msg.sender}</span>
                     <span>{dayjs(msg.timestamp).format('h:mm a')}</span>
                   </div>
-                  {typeof msg.content === 'object' ? null : msg.content}
+                  {typeof msg.content === 'object'
+                    ? null
+                    : decryptMessage(msg.content)}
                 </div>
               </div>
             ) : (
@@ -205,7 +202,7 @@ const ChatBox: FC<ChatBoxProps> = ({ selectedId }) => {
                       </button>
                     </i>
                   ) : (
-                    msg.content
+                    decryptMessage(msg.content)
                   )}
                 </div>
               </div>
